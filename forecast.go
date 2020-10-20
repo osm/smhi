@@ -14,7 +14,7 @@ const (
 
 // GetPointForecast fetches a forecast from the SMHI API for the given
 // longitude and latitude.
-func GetPointForcecast(lon, lat float64) (*PointForecast, error) {
+func GetPointForecast(lon, lat float64) (*PointForecast, error) {
 	var err error
 
 	// Fetch the forecast for the given longitude and latitude.

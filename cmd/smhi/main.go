@@ -15,7 +15,7 @@ func main() {
 
 	var f *smhi.PointForecast
 	var err error
-	if f, err = smhi.GetPointForcecast(*lon, *lat); err != nil {
+	if f, err = smhi.GetPointForecast(*lon, *lat); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
