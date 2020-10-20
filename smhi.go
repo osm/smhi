@@ -147,32 +147,32 @@ func getPrecipitationCategoryDescriptions(pc PrecipitationCategory) map[string]s
 
 	switch pc {
 	case NoPrecipitation:
-		ret["SE"] = "Ingen nederbörd"
-		ret["US"] = "No precipitation"
+		ret["sv-SE"] = "Ingen nederbörd"
+		ret["en-US"] = "No precipitation"
 		break
 	case Snow:
-		ret["SE"] = "Snö"
-		ret["US"] = "Snow"
+		ret["sv-SE"] = "Snö"
+		ret["en-US"] = "Snow"
 		break
 	case SnowAndRain:
-		ret["SE"] = "Snö och regn"
-		ret["US"] = "Snow and rain"
+		ret["sv-SE"] = "Snö och regn"
+		ret["en-US"] = "Snow and rain"
 		break
 	case Rain:
-		ret["SE"] = "Regn"
-		ret["US"] = "Rain"
+		ret["sv-SE"] = "Regn"
+		ret["en-US"] = "Rain"
 		break
 	case Drizzle:
-		ret["SE"] = "Duggregn"
-		ret["US"] = "Drizzle"
+		ret["sv-SE"] = "Duggregn"
+		ret["en-US"] = "Drizzle"
 		break
 	case FreezingRain:
-		ret["SE"] = "Frysande regn"
-		ret["US"] = "Freezing rain"
+		ret["sv-SE"] = "Frysande regn"
+		ret["en-US"] = "Freezing rain"
 		break
 	case FreezingDrizzle:
-		ret["SE"] = "Underkylt regn"
-		ret["US"] = "Freezing drizzle"
+		ret["sv-SE"] = "Underkylt regn"
+		ret["en-US"] = "Freezing drizzle"
 		break
 	}
 
@@ -185,112 +185,112 @@ func getWeatherSymbolDescription(ws WeatherSymbol) map[string]string {
 
 	switch ws {
 	case ClearSky:
-		ret["SE"] = "Klar himmel"
-		ret["US"] = "Clear sky"
+		ret["sv-SE"] = "Klar himmel"
+		ret["en-US"] = "Clear sky"
 		break
 	case NearlyClearSky:
-		ret["SE"] = "Nästan klar himmel"
-		ret["US"] = "Nearly clear sky"
+		ret["sv-SE"] = "Nästan klar himmel"
+		ret["en-US"] = "Nearly clear sky"
 		break
 	case VariableCloudiness:
-		ret["SE"] = "Växlande molnighet"
-		ret["US"] = "Variable cloudiness"
+		ret["sv-SE"] = "Växlande molnighet"
+		ret["en-US"] = "Variable cloudiness"
 		break
 	case HalfclearSky:
-		ret["SE"] = "Halvklar himmel"
-		ret["US"] = "Halfclear sky"
+		ret["sv-SE"] = "Halvklar himmel"
+		ret["en-US"] = "Halfclear sky"
 		break
 	case CloudySky:
-		ret["SE"] = "Molnig himmel"
-		ret["US"] = "Cloudy sky"
+		ret["sv-SE"] = "Molnig himmel"
+		ret["en-US"] = "Cloudy sky"
 		break
 	case Overcast:
-		ret["SE"] = "Mulet"
-		ret["US"] = "Overcast"
+		ret["sv-SE"] = "Mulet"
+		ret["en-US"] = "Overcast"
 		break
 	case Fog:
-		ret["SE"] = "Dimma"
-		ret["US"] = "Fog"
+		ret["sv-SE"] = "Dimma"
+		ret["en-US"] = "Fog"
 		break
 	case LightRainShowers:
-		ret["SE"] = "Lätta regnskurar"
-		ret["US"] = "Light rain showers"
+		ret["sv-SE"] = "Lätta regnskurar"
+		ret["en-US"] = "Light rain showers"
 		break
 	case ModerateRainShowers:
-		ret["SE"] = "Måttliga regnskurar"
-		ret["US"] = "Moderate rain showers"
+		ret["sv-SE"] = "Måttliga regnskurar"
+		ret["en-US"] = "Moderate rain showers"
 		break
 	case HeavyRainShowers:
-		ret["SE"] = "Kraftiga regnskurar"
-		ret["US"] = "Heavy rain showers"
+		ret["sv-SE"] = "Kraftiga regnskurar"
+		ret["en-US"] = "Heavy rain showers"
 		break
 	case Thunderstorm:
-		ret["SE"] = "Åskoväder"
-		ret["US"] = "Thunderstorm"
+		ret["sv-SE"] = "Åskoväder"
+		ret["en-US"] = "Thunderstorm"
 		break
 	case LightSleetShowers:
-		ret["SE"] = "Lätta regnskurar"
-		ret["US"] = "Light sleet showers"
+		ret["sv-SE"] = "Lätta regnskurar"
+		ret["en-US"] = "Light sleet showers"
 		break
 	case ModerateSleetShowers:
-		ret["SE"] = "Måttliga regnskurar"
-		ret["US"] = "Moderate sleet showers"
+		ret["sv-SE"] = "Måttliga regnskurar"
+		ret["en-US"] = "Moderate sleet showers"
 		break
 	case HeavySleetShowers:
-		ret["SE"] = "Kraftiga regnskurar"
-		ret["US"] = "Heavy sleet showers"
+		ret["sv-SE"] = "Kraftiga regnskurar"
+		ret["en-US"] = "Heavy sleet showers"
 		break
 	case LightSnowShowers:
-		ret["SE"] = "Lätta snöbyar"
-		ret["US"] = "Light snow showers"
+		ret["sv-SE"] = "Lätta snöbyar"
+		ret["en-US"] = "Light snow showers"
 		break
 	case ModerateSnowShowers:
-		ret["SE"] = "Måttliga snöbyar"
-		ret["US"] = "Moderate snow showers"
+		ret["sv-SE"] = "Måttliga snöbyar"
+		ret["en-US"] = "Moderate snow showers"
 		break
 	case HeavySnowShowers:
-		ret["SE"] = "Kraftiga snöbyar"
-		ret["US"] = "Heavy snow showers"
+		ret["sv-SE"] = "Kraftiga snöbyar"
+		ret["en-US"] = "Heavy snow showers"
 		break
 	case LightRain:
-		ret["SE"] = "Duggregn"
-		ret["US"] = "Light rain"
+		ret["sv-SE"] = "Duggregn"
+		ret["en-US"] = "Light rain"
 		break
 	case ModerateRain:
-		ret["SE"] = "Måttligt regn"
-		ret["US"] = "Moderate rain"
+		ret["sv-SE"] = "Måttligt regn"
+		ret["en-US"] = "Moderate rain"
 		break
 	case HeavyRain:
-		ret["SE"] = "Kraftigt regn"
-		ret["US"] = "Heavy rain"
+		ret["sv-SE"] = "Kraftigt regn"
+		ret["en-US"] = "Heavy rain"
 		break
 	case Thunder:
-		ret["SE"] = "Åska"
-		ret["US"] = "Thunder"
+		ret["sv-SE"] = "Åska"
+		ret["en-US"] = "Thunder"
 		break
 	case LightSleet:
-		ret["SE"] = "Lätt snöblandat regn"
-		ret["US"] = "Light sleet"
+		ret["sv-SE"] = "Lätt snöblandat regn"
+		ret["en-US"] = "Light sleet"
 		break
 	case ModerateSleet:
-		ret["SE"] = "Måttligt snöblandat regn"
-		ret["US"] = "Moderate sleet"
+		ret["sv-SE"] = "Måttligt snöblandat regn"
+		ret["en-US"] = "Moderate sleet"
 		break
 	case HeavySleet:
-		ret["SE"] = "Kraftigt snöblandat regn"
-		ret["US"] = "Heavy sleet"
+		ret["sv-SE"] = "Kraftigt snöblandat regn"
+		ret["en-US"] = "Heavy sleet"
 		break
 	case LightSnowfall:
-		ret["SE"] = "Lätt snöfall"
-		ret["US"] = "Light snowfall"
+		ret["sv-SE"] = "Lätt snöfall"
+		ret["en-US"] = "Light snowfall"
 		break
 	case ModerateSnowfall:
-		ret["SE"] = "Måttligt snöfall"
-		ret["US"] = "Moderate snowfall"
+		ret["sv-SE"] = "Måttligt snöfall"
+		ret["en-US"] = "Moderate snowfall"
 		break
 	case HeavySnowfall:
-		ret["SE"] = "Kraftigt snöfall"
-		ret["US"] = "Heavy snowfall"
+		ret["sv-SE"] = "Kraftigt snöfall"
+		ret["en-US"] = "Heavy snowfall"
 		break
 	}
 

@@ -21,6 +21,6 @@ func main() {
 	}
 
 	for _, t := range f.TimeSeries {
-		fmt.Println(t.Timestamp, t.WeatherSymbolDescription["SE"], t.AirTemperature, "C")
+		fmt.Println(t.Timestamp, t.WeatherSymbolDescription["sv-SE"], t.AirTemperature, "C")
 	}
 }
