@@ -134,6 +134,8 @@ func toPointForecast(d *PointForecastAPI) (*PointForecast, error) {
 			}
 		}
 
+		f.Hash = getHash(&f)
+
 		ret.TimeSeries = append(ret.TimeSeries, f)
 	}
 
@@ -295,4 +297,29 @@ func getWeatherSymbolDescription(ws WeatherSymbol) map[string]string {
 	}
 
 	return ret
+}
+
+func getHash(f *Forecast) string {
+	return fmt.Sprintf("%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v|%v",
+		f.AirPressure,
+		f.AirTemperature,
+		f.HorizontalVisibility,
+		f.MaximumPrecipitationIntensity,
+		f.MeanPrecipitationIntensity,
+		f.MeanValueOfHighLevelCloudCover,
+		f.MeanValueOfLowLevelCloudCover,
+		f.MeanValueOfMediumLevelCloudCover,
+		f.MeanValueOfTotalCloudCover,
+		f.MedianPrecipitationIntensity,
+		f.MinimumPrecipitationIntensity,
+		f.PercentOfPrecipitationInFrozenForm,
+		f.PrecipitationCategory,
+		f.RelativeHumidity,
+		f.ThunderProbability,
+		f.WeatherSymbol,
+		f.WindDirection,
+		f.WindGustSpeed,
+		f.WindSpeed,
+	)
+
 }

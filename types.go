@@ -78,6 +78,7 @@ type PointForecastAPI struct {
 // Forecast defines the structure that holds the converted TimeSeries data
 // from the data returned by the SMHI point forecast API.
 type Forecast struct {
+	Hash                               string
 	Timestamp                          time.Time
 	AirPressure                        float64
 	AirTemperature                     float64

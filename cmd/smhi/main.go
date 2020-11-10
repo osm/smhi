@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/osm/smhi"
 )
@@ -20,7 +21,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	loc, _ := time.LoadLocation("Europe/Stockholm")
+
 	for _, t := range f.TimeSeries {
-		fmt.Println(t.Timestamp, t.WeatherSymbolDescription["sv-SE"], t.AirTemperature, "C")
+		fmt.Println(
+			t.Timestamp.In(loc).Format("2006-01-02T15:04:05.999"),
+			t.WeatherSymbolDescription["sv-SE"],
+			t.AirTemperature, "C",
+		)
 	}
 }
