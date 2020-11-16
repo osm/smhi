@@ -86,6 +86,7 @@ func toPointForecast(d *PointForecastAPI) (*PointForecast, error) {
 				break
 			case "ws":
 				f.WindSpeed = p.Values[0]
+				f.WindSpeedDescription = getWindSpeedDescription(f.WindSpeed)
 				break
 			case "r":
 				f.RelativeHumidity = uint8(p.Values[0])
@@ -296,6 +297,53 @@ func getWeatherSymbolDescription(ws WeatherSymbol) map[string]string {
 		break
 	}
 
+	return ret
+}
+
+// getWindSpeedDescription returns a friendly name for the wind speed.
+func getWindSpeedDescription(windSpeed float64) map[string]string {
+	ret := make(map[string]string)
+
+	if windSpeed <= 0.2 {
+		ret["sv-SE"] = "Stiltje"
+		ret["en-US"] = "Calm"
+	} else if windSpeed >= 0.3 && windSpeed <= 1.5 {
+		ret["sv-SE"] = "Nästan stiltje"
+		ret["en-US"] = "Light air"
+	} else if windSpeed >= 1.6 && windSpeed <= 3.3 {
+		ret["sv-SE"] = "Lätt bris"
+		ret["en-US"] = "Light breeze"
+	} else if windSpeed >= 3.4 && windSpeed <= 5.4 {
+		ret["sv-SE"] = "God bris"
+		ret["en-US"] = "Gentle breeze"
+	} else if windSpeed >= 5.5 && windSpeed <= 7.9 {
+		ret["sv-SE"] = "Frisk bris"
+		ret["en-US"] = "Moderate breeze"
+	} else if windSpeed >= 8.0 && windSpeed <= 10.7 {
+		ret["sv-SE"] = "Styv bris"
+		ret["en-US"] = "Fresh breeze"
+	} else if windSpeed >= 10.8 && windSpeed <= 13.8 {
+		ret["sv-SE"] = "Hård bris"
+		ret["en-US"] = "Strong breeze"
+	} else if windSpeed >= 13.9 && windSpeed <= 17.1 {
+		ret["sv-SE"] = "Styv kuling"
+		ret["en-US"] = "Moderate gale"
+	} else if windSpeed >= 17.2 && windSpeed <= 20.7 {
+		ret["sv-SE"] = "Hård kuling"
+		ret["en-US"] = "Fresh gate"
+	} else if windSpeed >= 20.8 && windSpeed <= 24.4 {
+		ret["sv-SE"] = "Halv storm"
+		ret["en-US"] = "Strong gale"
+	} else if windSpeed >= 24.5 && windSpeed <= 28.4 {
+		ret["sv-SE"] = "Storm"
+		ret["en-US"] = "Storm"
+	} else if windSpeed >= 28.5 && windSpeed <= 32.6 {
+		ret["sv-SE"] = "Svår storm"
+		ret["en-US"] = "Violent storm"
+	} else {
+		ret["sv-SE"] = "Orkan"
+		ret["en-US"] = "Hurricane"
+	}
 	return ret
 }
 

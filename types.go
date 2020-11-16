@@ -101,6 +101,7 @@ type Forecast struct {
 	WindDirection                      uint8
 	WindGustSpeed                      float64
 	WindSpeed                          float64
+	WindSpeedDescription               map[string]string
 }
 
 // PointForecast holds the data for a complete PointForecast request.
