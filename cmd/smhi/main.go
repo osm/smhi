@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	lon := flag.Float64("lon", 0, "longitude")
-	lat := flag.Float64("lat", 0, "latitude")
+	lon := flag.Float64("lon", 11.785, "longitude")
+	lat := flag.Float64("lat", 57.634, "latitude")
 	flag.Parse()
 
 	var f *smhi.PointForecast
@@ -28,6 +28,7 @@ func main() {
 			t.Timestamp.In(loc).Format("2006-01-02T15:04:05.999"),
 			t.WeatherSymbolDescription["sv-SE"],
 			t.AirTemperature, "C",
+			t.WindSpeed, t.WindSpeedDescription["sv-SE"],
 		)
 	}
 }
