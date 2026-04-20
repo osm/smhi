@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	forecastURL = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%f/lat/%f/data.json"
+	forecastURL = "https://opendata-download-metfcst.smhi.se/api/category/snow1g/version/1/geotype/point/lon/%f/lat/%f/data.json"
 )
 
 // GetPointForecast fetches a forecast from the SMHI API for the given
@@ -51,10 +51,23 @@ func GetPointForecast(lon, lat float64) (*PointForecast, error) {
 func toPointForecast(d *PointForecastAPI) (*PointForecast, error) {
 	var ret PointForecast
 	var err error
+	approvedTime := d.CreatedTime
+	if approvedTime == "" {
+		approvedTime = d.ApprovedTime
+	}
 
 	// Fill if with some basic data.
-	if ret.ApprovedTime, err = time.Parse(time.RFC3339, d.ApprovedTime); err != nil {
+	if ret.ApprovedTime, err = time.Parse(time.RFC3339, approvedTime); err != nil {
 		return nil, err
+	}
+	ret.CreatedTime = ret.ApprovedTime
+	if d.CreatedTime != "" {
+		if ret.CreatedTime, err = time.Parse(time.RFC3339, d.CreatedTime); err != nil {
+			return nil, err
+		}
+	}
+	if d.CreatedTime == "" {
+		ret.CreatedTime = ret.ApprovedTime
 	}
 	if ret.ReferenceTime, err = time.Parse(time.RFC3339, d.ReferenceTime); err != nil {
 		return nil, err
@@ -68,72 +81,40 @@ func toPointForecast(d *PointForecastAPI) (*PointForecast, error) {
 	// timestamp.
 	for _, t := range d.TimeSeries {
 		var f Forecast
-		f.Timestamp, err = time.Parse(time.RFC3339, t.ValidTime)
-
-		for _, p := range t.Parameters {
-			switch p.Name {
-			case "msl":
-				f.AirPressure = p.Values[0]
-				break
-			case "t":
-				f.AirTemperature = p.Values[0]
-				break
-			case "vis":
-				f.HorizontalVisibility = p.Values[0]
-				break
-			case "wd":
-				f.WindDirection = uint8(p.Values[0])
-				break
-			case "ws":
-				f.WindSpeed = p.Values[0]
-				f.WindSpeedDescription = getWindSpeedDescription(f.WindSpeed)
-				break
-			case "r":
-				f.RelativeHumidity = uint8(p.Values[0])
-				break
-			case "tstm":
-				f.ThunderProbability = uint8(p.Values[0])
-				break
-			case "tcc_mean":
-				f.MeanValueOfTotalCloudCover = uint8(p.Values[0])
-				break
-			case "lcc_mean":
-				f.MeanValueOfLowLevelCloudCover = uint8(p.Values[0])
-				break
-			case "mcc_mean":
-				f.MeanValueOfMediumLevelCloudCover = uint8(p.Values[0])
-				break
-			case "hcc_mean":
-				f.MeanValueOfHighLevelCloudCover = uint8(p.Values[0])
-				break
-			case "gust":
-				f.WindGustSpeed = p.Values[0]
-				break
-			case "pmin":
-				f.MinimumPrecipitationIntensity = p.Values[0]
-				break
-			case "pmax":
-				f.MaximumPrecipitationIntensity = p.Values[0]
-				break
-			case "spp":
-				f.PercentOfPrecipitationInFrozenForm = int8(p.Values[0])
-				break
-			case "pcat":
-				f.PrecipitationCategory = PrecipitationCategory(p.Values[0])
-				f.PrecipitationCategoryDescription = getPrecipitationCategoryDescriptions(f.PrecipitationCategory)
-				break
-			case "pmean":
-				f.MeanPrecipitationIntensity = p.Values[0]
-				break
-			case "pmedian":
-				f.MedianPrecipitationIntensity = p.Values[0]
-				break
-			case "Wsymb2":
-				f.WeatherSymbol = WeatherSymbol(p.Values[0])
-				f.WeatherSymbolDescription = getWeatherSymbolDescription(f.WeatherSymbol)
-				break
-			}
+		if f.Timestamp, err = time.Parse(time.RFC3339, t.Time); err != nil {
+			return nil, err
 		}
+		if f.IntervalParametersStartTime, err = time.Parse(time.RFC3339, t.IntervalParametersStartTime); err != nil {
+			return nil, err
+		}
+
+		f.AirPressure = t.Data.AirPressureAtMeanSeaLevel
+		f.AirTemperature = t.Data.AirTemperature
+		f.HorizontalVisibility = t.Data.VisibilityInAir
+		f.MaximumPrecipitationIntensity = t.Data.PrecipitationAmountMax
+		f.MeanPrecipitationIntensity = t.Data.PrecipitationAmountMean
+		f.MeanValueOfHighLevelCloudCover = t.Data.HighTypeCloudAreaFraction
+		f.MeanValueOfLowLevelCloudCover = t.Data.LowTypeCloudAreaFraction
+		f.MeanValueOfMediumLevelCloudCover = t.Data.MediumTypeCloudAreaFraction
+		f.MeanValueOfTotalCloudCover = t.Data.CloudAreaFraction
+		f.MedianPrecipitationIntensity = t.Data.PrecipitationAmountMedian
+		f.MinimumPrecipitationIntensity = t.Data.PrecipitationAmountMin
+		f.ProbabilityOfFrozenPrecipitation = t.Data.ProbabilityOfFrozenPrecipitation
+		f.ProbabilityOfPrecipitation = t.Data.ProbabilityOfPrecipitation
+		f.PercentOfPrecipitationInFrozenForm = t.Data.PrecipitationFrozenPart
+		f.PrecipitationCategory = PrecipitationCategory(t.Data.PredominantPrecipitationTypeAtSurface)
+		f.PrecipitationCategoryDescription = getPrecipitationCategoryDescriptions(f.PrecipitationCategory)
+		f.RelativeHumidity = t.Data.RelativeHumidity
+		f.ThunderProbability = t.Data.ThunderstormProbability
+		f.WeatherSymbol = t.Data.SymbolCode
+		f.WeatherSymbolDescription = getWeatherSymbolDescription(f.WeatherSymbol)
+		f.WindDirection = t.Data.WindFromDirection
+		f.WindGustSpeed = t.Data.WindSpeedOfGust
+		f.WindSpeed = t.Data.WindSpeed
+		f.WindSpeedDescription = getWindSpeedDescription(f.WindSpeed)
+		f.CloudBaseAltitude = t.Data.CloudBaseAltitude
+		f.CloudTopAltitude = t.Data.CloudTopAltitude
+		f.DeterministicPrecipitationAmount = t.Data.PrecipitationAmountMeanDeterministic
 
 		f.Hash = getHash(&f)
 
